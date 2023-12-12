@@ -16,8 +16,6 @@ import software.amazon.awssdk.services.sqs.SqsClient;
 @PojaGenerated
 public class MailboxEventHandler implements RequestHandler<SQSEvent, String> {
 
-  public static final String SPRING_SERVER_PORT_FOR_RANDOM_VALUE = "0";
-
   @Override
   public String handleRequest(SQSEvent event, Context context) {
     log.info("Received: event={}, awsReqId={}", event, context.getAwsRequestId());
@@ -37,9 +35,7 @@ public class MailboxEventHandler implements RequestHandler<SQSEvent, String> {
 
   private ConfigurableApplicationContext applicationContext(String... args) {
     SpringApplication application = new SpringApplication(PojaApplication.class);
-    application.setDefaultProperties(
-        Map.of(
-            "spring.flyway.enabled", "false", "server.port", SPRING_SERVER_PORT_FOR_RANDOM_VALUE));
+    application.setDefaultProperties(Map.of("spring.flyway.enabled", "false"));
     return application.run(args);
   }
 }
